@@ -48,7 +48,7 @@
   <div class="card">
     <div class="scenarios" id="scenarios"></div>
     <div class="screen">
-      <video id="vid" controls playsinline preload="metadata" style="display:none"></video>
+      <video id="vid" controls muted playsinline preload="metadata" style="display:none"></video>
       <div class="ph" id="ph">
         <span class="play"><svg width="18" height="20" viewBox="0 0 18 20"><path d="M0 0 L18 10 L0 20 Z" fill="#9aa3b2"/></svg></span>
         <span class="lab" id="phLab">Head-on</span>
@@ -57,7 +57,6 @@
     </div>
     <p class="cap" id="cap"></p>
   </div>
-  <p class="foot">Tip: keep clips short (5–10 s), 16:9, H.264 .mp4 for broad browser support.</p>
 </div>
 
 <script>
@@ -69,7 +68,7 @@ const SCENES = [
   { label:'Head-on',           src:'clips/head-on.mp4', poster:'', file:'clips/headon.mp4',     tip:'Robot and a person approach head-on — it yields early and arcs wide.' },
   { label:'Overtaking',        src:'clips/overtaking.mp4', poster:'', file:'clips/overtaking.mp4', tip:'Passing a slower pedestrian while holding social clearance.' },
   { label:'Sudden appearance', src:'clips/sudden-appearance.mp4', poster:'', file:'clips/sudden.mp4',     tip:'A person steps out suddenly — anticipatory deceleration kicks in.' },
-  { label:'Static obstacle',     src:'clips/static-object.mp4', poster:'', file:'clips/static.mp4',     tip:'A person standing in the path — the robot routes around with margin.' },
+  { label:'Static obstacle',     src:'clips/static-object.mp4', poster:'', file:'clips/static.mp4',     tip:'An obstacle in the path — the robot routes around with margin.' },
 ];
 /* ========================================================= */
 

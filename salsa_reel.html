@@ -66,8 +66,8 @@
   <div class="head">
     <div>
       <p class="eyebrow">Deployment reel</p>
-      <h1>Hours of real-robot runs, in one reel.</h1>
-      <p class="note">A montage of the trials behind the numbers — corridors, frontal obstacles, pedestrians, crowds.</p>
+      <h1>Real-robot trials, scenario by scenario.</h1>
+      <p class="note">A montage of the trials behind the numbers — narrow passages, frontal obstacles, pedestrians.</p>
     </div>
   </div>
 
@@ -90,15 +90,15 @@
                    Leave img '' to keep numbered placeholders.                      */
 const MONTAGE = { src:'', poster:'' };
 const FRAMES = [
-  { label:'Encounter',         clip:'clips/encounter.mp4' },
-  { label:'Human interaction', clip:'clips/human-interaction.mp4' },
-  { label:'Narrow corridor',   clip:'clips/narrow.mp4' },
-  { label:'Safe overtake',     clip:'clips/safe-overtake.mp4' },
-  { label:'Social awareness',  clip:'clips/social-aware.mp4' },
-  { label:'Red cone',          clip:'clips/red-cone.mp4' },
-  { label:'Two obstacles',     clip:'clips/two-obstacles.mp4' },
-  { label:'Suitcase',          clip:'clips/suitcase.mp4' },
-  { label:'Sudden appearance', clip:'clips/sudden-appearance.mp4' },
+  { label:'Head-on encounter',   clip:'clips/head-on.mp4' },
+  { label:'Dynamic interaction', clip:'clips/human-interaction.mp4' },
+  { label:'Narrow passage',      clip:'clips/narrow.mp4' },
+  { label:'Overtaking',          clip:'clips/safe-overtake.mp4' },
+  { label:'Social clearance',    clip:'clips/social-aware.mp4' },
+  { label:'Frontal obstacle',    clip:'clips/red-cone.mp4' },
+  { label:'Obstacles on the fly',clip:'clips/suitcase.mp4' },
+  { label:'Continuous avoidance',clip:'clips/two-obstacles.mp4' },
+  { label:'Sudden appearance',   clip:'clips/sudden-appearance.mp4' },
 ];
 /* ======================== */
 
@@ -116,7 +116,7 @@ function makeFrame(f,i){
     document.querySelectorAll('#track video').forEach(o=>{if(o!==v)o.pause();});
     document.querySelectorAll('.frame.playing').forEach(fr=>fr.classList.remove('playing'));
     d.classList.add('playing'); reel.classList.add('frozen');
-    v.controls=true; v.muted=false; v.play().catch(()=>{v.muted=true;v.play().catch(()=>{});});
+    v.controls=true; v.muted=true; v.play().catch(()=>{});
   };
   const stop=()=>{ d.classList.remove('playing'); v.controls=false; if(!anyPlaying()) reel.classList.remove('frozen'); };
   v.addEventListener('pause',stop); v.addEventListener('ended',stop);
