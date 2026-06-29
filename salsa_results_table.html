@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SALSA — Per-scenario results</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Space+Mono:wght@400;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#f5f6f8; --ink:#16181c; --muted:#5c6473; --faint:#8a92a2; --line:#e4e7ec;
+    --coral:#E0473D; --green:#1F9D6B; --indigo:#2c45c8; --tint:rgba(31,157,107,.07);
+    --disp:'Space Grotesk',system-ui,sans-serif; --mono:'Space Mono',monospace; --body:'Inter',system-ui,sans-serif;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);line-height:1.55;
+    display:flex;justify-content:center;padding:8px 20px 46px;-webkit-font-smoothing:antialiased}
+  .stage{width:100%;max-width:1040px}
+  .group{font-family:var(--disp);font-weight:700;font-size:17px;margin:0 0 3px;display:flex;align-items:center;gap:9px}
+  .group .tick{width:4px;height:17px;border-radius:2px;background:var(--indigo)}
+  .glabel{color:var(--muted);font-size:13.5px;margin:0 0 16px}
+  .scroll{overflow-x:auto;border:1px solid var(--line);border-radius:14px;background:#fff}
+  table{border-collapse:collapse;width:100%;min-width:680px}
+  thead th{font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);
+    font-weight:400;text-align:right;padding:14px 14px 12px;border-bottom:2px solid var(--ink);white-space:nowrap}
+  thead th.l{text-align:left}
+  tbody td{font-family:var(--mono);font-size:13.5px;text-align:right;padding:11px 14px;color:var(--ink);white-space:nowrap}
+  tbody td.l{text-align:left;font-family:var(--body)}
+  .scn-cell{font-family:var(--disp);font-weight:600;font-size:14px;vertical-align:middle}
+  .method{font-family:var(--disp);font-weight:600;font-size:13px}
+  tr.ours{background:var(--tint)}
+  tr.ours .method{color:var(--green)}
+  tr.base .method{color:var(--coral)}
+  tr.gtop td{border-top:1px solid var(--line)}
+  td.best{font-weight:700;color:var(--ink)}
+  tr.ours td.best{color:var(--green)}
+  .na{color:var(--faint)}
+  .foot{font-family:var(--mono);font-size:11px;color:var(--faint);margin:14px 2px 0;line-height:1.6}
+</style>
+</head>
+<body>
+<div class="stage">
+  <p class="group"><span class="tick"></span>Per-scenario, on the real robot</p>
+  <p class="glabel">The full table behind the deployment numbers. Best in each comparison is <b style="color:var(--ink)">bold</b>.</p>
+  <div class="scroll">
+    <table>
+      <thead><tr>
+        <th class="l">Scenario</th><th class="l">Method</th><th>n</th>
+        <th>Goal reached&nbsp;&#8593;</th><th>Collision&nbsp;&#8595;</th><th>Steps</th>
+        <th>Smoothness&nbsp;&#8595;</th><th>Final dist (m)&nbsp;&#8595;</th>
+      </tr></thead>
+      <tbody id="tb"></tbody>
+    </table>
+  </div>
+  <p class="foot">Goal reached &amp; collision in %. Smoothness = total variation of yaw rate (lower is smoother). Sequential is a two-leg 5 m goal. n = number of trials.</p>
+</div>
+<script>
+const DATA=[
+  {scn:'Static',         ours:{n:5, goal:80, coll:0,  steps:21.6, sm:0.277, fgd:0.43}, base:{n:5, goal:60, coll:40,  steps:17.2, sm:0.400, fgd:1.45}},
+  {scn:'Narrow',         ours:{n:18,goal:100,coll:0,  steps:20.6, sm:0.287, fgd:0.33}, base:{n:13,goal:15, coll:31,  steps:19.2, sm:0.342, fgd:1.04}},
+  {scn:'Pedestrian',     ours:{n:5, goal:100,coll:0,  steps:20.5, sm:0.328, fgd:0.27}, base:{n:5, goal:20, coll:20,  steps:20.8, sm:0.554, fgd:1.56}},
+  {scn:'Dynamic',        ours:{n:8, goal:100,coll:0,  steps:21.0, sm:0.345, fgd:0.25}, base:{n:8, goal:0,  coll:25,  steps:22.2, sm:0.541, fgd:1.44}},
+  {scn:'Sequential (5 m)',ours:{n:2,goal:100,coll:0,  steps:26.0, sm:0.485, fgd:0.21}, base:{n:2, goal:0,  coll:100, steps:15.0, sm:null,  fgd:null}},
+];
+const tb=document.getElementById('tb');
+const fmt=(v,d)=> v===null?'<span class="na">n/a</span>':(d!=null?v.toFixed(d):v);
+// which side wins per metric: goal=higher, coll/sm/fgd=lower
+function winner(o,b,higher){ if(o===null&&b===null) return 0; if(b===null) return -1; if(o===null) return 1;
+  if(o===b) return 0; return higher?(o>b?-1:1):(o<b?-1:1); }
+DATA.forEach(row=>{
+  const w={goal:winner(row.ours.goal,row.base.goal,true),
+           coll:winner(row.ours.coll,row.base.coll,false),
+           sm:winner(row.ours.sm,row.base.sm,false),
+           fgd:winner(row.ours.fgd,row.base.fgd,false)};
+  function cells(side,m){
+    const bestFor=side==='ours'?-1:1;
+    const c=k=> w[k]===bestFor?' class="best"':'';
+    return `<td${c('goal')}>${m.goal}</td><td${c('coll')}>${m.coll}</td>`
+         + `<td>${m.steps.toFixed(1)}</td><td${c('sm')}>${fmt(m.sm,3)}</td><td${c('fgd')}>${fmt(m.fgd,2)}</td>`;
+  }
+  tb.insertAdjacentHTML('beforeend',
+    `<tr class="ours gtop"><td class="l scn-cell" rowspan="2">${row.scn}</td>`
+    +`<td class="l method">SALSA (ours)</td><td>${row.ours.n}</td>${cells('ours',row.ours)}</tr>`
+    +`<tr class="base"><td class="l method">Base</td><td>${row.base.n}</td>${cells('base',row.base)}</tr>`);
+});
+</script>
+<script>(function(){var lp=0;function H(){var d=document;return Math.max(d.documentElement.scrollHeight,(d.body?d.body.scrollHeight:0),(d.body?d.body.offsetHeight:0));}function P(){var h=H()+2;if(Math.abs(h-lp)>3){lp=h;try{parent.postMessage({__salsaH:h},'*');}catch(e){}}}window.addEventListener('load',function(){P();setTimeout(P,300);setTimeout(P,1200);});try{new ResizeObserver(P).observe(document.documentElement);}catch(e){}setInterval(P,1500);P();})();</script>
+</body>
+</html>

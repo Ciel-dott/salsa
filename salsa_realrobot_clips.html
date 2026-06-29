@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SALSA — Real-robot clips</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Space+Mono:wght@400;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#f5f6f8; --ink:#16181c; --muted:#5c6473; --faint:#8a92a2; --line:#e4e7ec;
+    --indigo:#2c45c8; --green:#1f9d6b;
+    --disp:'Space Grotesk',system-ui,sans-serif; --mono:'Space Mono',monospace; --body:'Inter',system-ui,sans-serif;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);line-height:1.6;
+    display:flex;align-items:center;justify-content:center;padding:40px 20px;-webkit-font-smoothing:antialiased}
+  .stage{width:100%;max-width:860px}
+  .eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--indigo);margin:0 0 12px}
+  h1{font-family:var(--disp);font-weight:700;font-size:clamp(22px,3.4vw,30px);letter-spacing:-.015em;margin:0 0 10px}
+  .note{color:var(--muted);font-size:15px;max-width:620px;margin:0 0 22px}
+  .note b{color:var(--ink)}
+
+  .card{background:#fff;border:1px solid var(--line);border-radius:16px;overflow:hidden}
+  .scenarios{display:flex;gap:8px;flex-wrap:wrap;padding:14px 16px 0}
+  .scenarios button{background:#eceff4;border:1px solid var(--line);color:var(--muted);font-family:var(--disp);
+    font-weight:600;font-size:13px;padding:8px 13px;border-radius:9px;cursor:pointer;transition:all .15s}
+  .scenarios button:hover{color:var(--ink)}
+  .scenarios button.on{background:var(--indigo);color:#f5f6f8;border-color:var(--indigo)}
+
+  .screen{position:relative;margin:14px 16px 16px;border-radius:12px;overflow:hidden;background:#0F141B;aspect-ratio:16/9}
+  .screen video{display:block;width:100%;height:100%;object-fit:contain;background:#0F141B}
+  .ph{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;color:#9aa3b2;text-align:center;padding:20px}
+  .ph .play{width:50px;height:50px;border-radius:50%;border:1.5px solid #2a3550;display:grid;place-items:center}
+  .ph .play svg{margin-left:3px}
+  .ph .lab{font-family:var(--disp);font-weight:600;color:#cdd3df;font-size:15px}
+  .ph .file{font-family:var(--mono);font-size:11.5px;color:#7c869a;letter-spacing:.04em}
+  .cap{font-family:var(--body);font-size:13.5px;color:var(--muted);padding:0 16px 16px;margin:-4px 0 0}
+  .foot{font-family:var(--mono);font-size:11px;color:var(--faint);margin:14px 2px 0}
+</style>
+</head>
+<body>
+<div class="stage">
+  <p class="eyebrow">Real-robot deployment</p>
+  <h1>The same social scenarios — on a real robot.</h1>
+  <p class="note">The same live closed loop, now on a <b>Unitree quadruped</b> — monocular RGB, no LiDAR at inference. Pick a scenario to watch the clip.</p>
+
+  <div class="card">
+    <div class="scenarios" id="scenarios"></div>
+    <div class="screen">
+      <video id="vid" controls playsinline preload="metadata" style="display:none"></video>
+      <div class="ph" id="ph">
+        <span class="play"><svg width="18" height="20" viewBox="0 0 18 20"><path d="M0 0 L18 10 L0 20 Z" fill="#9aa3b2"/></svg></span>
+        <span class="lab" id="phLab">Head-on</span>
+        <span class="file" id="phFile">drop clip → clips/headon.mp4</span>
+      </div>
+    </div>
+    <p class="cap" id="cap"></p>
+  </div>
+  <p class="foot">Tip: keep clips short (5–10 s), 16:9, H.264 .mp4 for broad browser support.</p>
+</div>
+
+<script>
+/* ====== EDIT HERE: point each scenario at your clip ======
+   Put your files next to this page (e.g. a "clips/" folder) and set `src`.
+   `poster` (optional) is a thumbnail shown before play. Leave src as '' to keep
+   the placeholder. You can rename labels, add, or remove scenarios freely.        */
+const SCENES = [
+  { label:'Head-on',           src:'clips/head-on.mp4', poster:'', file:'clips/headon.mp4',     tip:'Robot and a person approach head-on — it yields early and arcs wide.' },
+  { label:'Overtaking',        src:'clips/overtaking.mp4', poster:'', file:'clips/overtaking.mp4', tip:'Passing a slower pedestrian while holding social clearance.' },
+  { label:'Sudden appearance', src:'clips/sudden-appearance.mp4', poster:'', file:'clips/sudden.mp4',     tip:'A person steps out suddenly — anticipatory deceleration kicks in.' },
+  { label:'Static obstacle',     src:'clips/static-object.mp4', poster:'', file:'clips/static.mp4',     tip:'A person standing in the path — the robot routes around with margin.' },
+];
+/* ========================================================= */
+
+const tabsEl=document.getElementById('scenarios');
+const vid=document.getElementById('vid'), ph=document.getElementById('ph');
+const phLab=document.getElementById('phLab'), phFile=document.getElementById('phFile'), cap=document.getElementById('cap');
+let active=0;
+
+SCENES.forEach((sc,i)=>{
+  const b=document.createElement('button');
+  b.textContent=sc.label; if(i===0) b.className='on';
+  b.onclick=()=>select(i);
+  tabsEl.appendChild(b);
+});
+
+function select(i){
+  active=i;
+  [...tabsEl.children].forEach((b,k)=>b.classList.toggle('on',k===i));
+  const sc=SCENES[i];
+  cap.textContent=sc.tip||'';
+  try{ vid.pause(); }catch(e){}
+  if(sc.src){
+    ph.style.display='none'; vid.style.display='block';
+    vid.src=sc.src; if(sc.poster) vid.poster=sc.poster; vid.load();
+  } else {
+    vid.removeAttribute('src'); vid.style.display='none'; ph.style.display='flex';
+    phLab.textContent=sc.label; phFile.textContent='drop clip → '+(sc.file||'your-clip.mp4');
+  }
+}
+select(0);
+</script>
+<script>(function(){var last=0;function H(){var d=document;return Math.max(d.documentElement.scrollHeight,(d.body?d.body.scrollHeight:0),(d.body?d.body.offsetHeight:0));}function P(){var h=H()+2;if(h>last){last=h;try{parent.postMessage({__salsaH:h},'*');}catch(e){}}}window.addEventListener('load',function(){P();setTimeout(P,300);setTimeout(P,1200);setTimeout(P,2500);});try{new ResizeObserver(P).observe(document.documentElement);}catch(e){}var n=0,iv=setInterval(function(){P();if(++n>12)clearInterval(iv);},1000);P();})();</script>
+</body>
+</html>

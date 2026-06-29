@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SALSA — Results</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Space+Mono:wght@400;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#f5f6f8; --panel:#fff; --ink:#16181c; --muted:#5c6473; --faint:#8a92a2; --line:#e4e7ec;
+    --coral:#E0473D; --indigo:#2c45c8; --green:#1F9D6B; --track:#eceff4;
+    --disp:'Space Grotesk',system-ui,sans-serif; --mono:'Space Mono',monospace; --body:'Inter',system-ui,sans-serif;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);line-height:1.6;
+    display:flex;justify-content:center;padding:44px 20px 30px;-webkit-font-smoothing:antialiased}
+  .stage{width:100%;max-width:1040px}
+  .eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--indigo);margin:0 0 12px}
+  h1{font-family:var(--disp);font-weight:700;font-size:clamp(24px,3.6vw,32px);letter-spacing:-.02em;margin:0 0 30px}
+
+  .group{font-family:var(--disp);font-weight:700;font-size:17px;margin:0 0 3px;display:flex;align-items:center;gap:9px}
+  .group .tick{width:4px;height:17px;border-radius:2px;background:var(--indigo);display:inline-block}
+  .glabel{color:var(--muted);font-size:13.5px;margin:0 0 18px}
+  .block{margin:0 0 36px}
+
+  /* offline cards */
+  .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+  @media(max-width:720px){.cards{grid-template-columns:1fr}}
+  .card{background:var(--panel);border:1px solid var(--line);border-top:3px solid var(--ac,#999);border-radius:14px;padding:18px 18px 16px}
+  .card .t{font-family:var(--disp);font-weight:600;font-size:14px;color:var(--ac);margin:0 0 12px}
+  .card .nums{display:flex;align-items:baseline;gap:9px;font-family:var(--disp);font-weight:700;font-size:clamp(20px,2.6vw,26px);white-space:nowrap}
+  .card .was{color:var(--coral)} .card .arr{color:var(--faint);font-size:18px} .card .now{color:var(--green)}
+  .card .pill{display:inline-block;margin:12px 0 0;font-family:var(--disp);font-weight:700;font-size:13px;color:var(--green);background:rgba(31,157,107,.12);border-radius:8px;padding:5px 10px}
+  .card .cap{color:var(--muted);font-size:12.5px;margin:10px 0 0}
+
+  /* deployment */
+  .deploy{display:grid;grid-template-columns:1fr 1.2fr;gap:30px}
+  @media(max-width:760px){.deploy{grid-template-columns:1fr;gap:26px}}
+  .metrics{border-top:1px solid var(--line)}
+  .row{display:grid;grid-template-columns:1fr auto auto;gap:18px;align-items:center;padding:15px 2px;border-bottom:1px solid var(--line)}
+  .row .lab{font-family:var(--disp);font-weight:600;font-size:15px}
+  .row .ours,.row .base{font-family:var(--disp);font-weight:700;font-size:22px;text-align:right;min-width:64px}
+  .row .ours{color:var(--green)} .row .base{color:var(--coral)}
+  .row small{display:block;font-family:var(--mono);font-weight:400;font-size:10px;color:var(--faint)}
+  .colhead{display:grid;grid-template-columns:1fr auto auto;gap:18px;padding:0 2px 8px}
+  .colhead span{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;text-align:right;min-width:64px}
+  .colhead .o{color:var(--green)} .colhead .b{color:var(--coral)}
+  .trials{font-family:var(--mono);font-size:11.5px;color:var(--faint);margin:10px 2px 0}
+
+  .scn{margin:0 0 16px}
+  .scn .top{display:flex;justify-content:space-between;align-items:baseline;margin:0 0 6px}
+  .scn .nm{font-family:var(--disp);font-weight:600;font-size:14px}
+  .scn .tr{font-family:var(--mono);font-size:10.5px;color:var(--faint)}
+  .barwrap{display:flex;align-items:center;gap:9px;margin:4px 0}
+  .bar{flex:1;height:11px;background:var(--track);border-radius:6px;overflow:hidden}
+  .bar i{display:block;height:100%;border-radius:6px}
+  .bar.o i{background:var(--green)} .bar.b i{background:var(--coral)}
+  .pct{font-family:var(--mono);font-weight:700;font-size:12px;min-width:42px;text-align:right}
+  .pct.o{color:var(--green)} .pct.b{color:var(--coral)}
+  .legend{display:flex;gap:16px;font-family:var(--mono);font-size:11px;color:var(--muted);margin:0 0 14px}
+  .legend i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:5px;vertical-align:-1px}
+</style>
+</head>
+<body>
+<div class="stage">
+  <p class="eyebrow">Results</p>
+  <h1>What the alignment buys.</h1>
+
+  <!-- OFFLINE -->
+  <div class="block">
+    <p class="group"><span class="tick"></span>Offline evaluation</p>
+    <p class="glabel">SALSA vs. base — social-differentiation &amp; collision-safety metrics.</p>
+    <div class="cards">
+      <div class="card" style="--ac:#E0473D">
+        <p class="t">Near-collision reduction</p>
+        <div class="nums"><span class="was">2460</span><span class="arr">&#8594;</span><span class="now">334</span></div>
+        <span class="pill">&#8722;86.4%</span>
+        <p class="cap">Fewer dangerous situations.</p>
+      </div>
+      <div class="card" style="--ac:#2c45c8">
+        <p class="t">Social differentiation</p>
+        <div class="nums"><span class="was">53%</span><span class="arr">&#8594;</span><span class="now">93%</span></div>
+        <span class="pill">+40% CF-Acc</span>
+        <p class="cap">Tells people apart from objects.</p>
+      </div>
+      <div class="card" style="--ac:#1F9D6B">
+        <p class="t">Obstacle clearance</p>
+        <div class="nums"><span class="was">0.79m</span><span class="arr">&#8594;</span><span class="now">1.38m</span></div>
+        <span class="pill">+75.9%</span>
+        <p class="cap">More space around obstacles.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- DEPLOYMENT -->
+  <div class="block">
+    <p class="group"><span class="tick" style="background:var(--green)"></span>Real-robot deployment</p>
+    <p class="glabel"><b style="color:var(--green)">Ours (SALSA)</b> vs. <b style="color:var(--coral)">base</b> — 36 vs. 31 trials · 4.0 m goal · 25-step budget · success = within 0.5 m of goal.</p>
+    <div class="deploy">
+      <div>
+        <div class="colhead"><span></span><span class="o">Ours</span><span class="b">Base</span></div>
+        <div class="metrics">
+          <div class="row"><span class="lab">Success &#8593;</span><span class="ours">97%<small>35/36</small></span><span class="base">19%<small>6/31</small></span></div>
+          <div class="row"><span class="lab">Collision &#8595;</span><span class="ours">0%</span><span class="base">29%</span></div>
+          <div class="row"><span class="lab">Timeout &#8595;</span><span class="ours">3%</span><span class="base">52%</span></div>
+        </div>
+        <p class="trials">Lower is better for collision and timeout; higher for success.</p>
+      </div>
+      <div>
+        <div class="legend"><span><i style="background:var(--green)"></i>Ours</span><span><i style="background:var(--coral)"></i>Base</span><span>success rate by scenario</span></div>
+        <div id="scenarios"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const SCN=[
+  {nm:'Static',     tr:'5 / 5 trials',   o:80, b:60},
+  {nm:'Narrow',     tr:'18 / 13 trials', o:100,b:15},
+  {nm:'Pedestrian', tr:'5 / 5 trials',   o:100,b:20},
+  {nm:'Dynamic',    tr:'8 / 8 trials',   o:100,b:0},
+];
+const host=document.getElementById('scenarios');
+SCN.forEach(s=>{
+  const d=document.createElement('div'); d.className='scn';
+  d.innerHTML=`<div class="top"><span class="nm">${s.nm}</span><span class="tr">${s.tr}</span></div>
+    <div class="barwrap"><div class="bar o"><i style="width:0%"></i></div><span class="pct o">${s.o}%</span></div>
+    <div class="barwrap"><div class="bar b"><i style="width:0%"></i></div><span class="pct b">${s.b}%</span></div>`;
+  host.appendChild(d);
+  const [io,ib]=d.querySelectorAll('.bar i');
+  requestAnimationFrame(()=>{setTimeout(()=>{io.style.transition=ib.style.transition='width .9s cubic-bezier(.22,1,.36,1)';io.style.width=s.o+'%';ib.style.width=s.b+'%';},120);});
+});
+</script>
+<script>(function(){var lp=0;function H(){var d=document;return Math.max(d.documentElement.scrollHeight,(d.body?d.body.scrollHeight:0),(d.body?d.body.offsetHeight:0));}function P(){var h=H()+2;if(Math.abs(h-lp)>3){lp=h;try{parent.postMessage({__salsaH:h},'*');}catch(e){}}}window.addEventListener('load',function(){P();setTimeout(P,300);setTimeout(P,1200);setTimeout(P,2000);});try{new ResizeObserver(P).observe(document.documentElement);}catch(e){}setInterval(P,1500);P();})();</script>
+</body>
+</html>

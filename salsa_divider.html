@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SALSA — How it works</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600;700&family=Space+Mono:wght@400;700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#f5f6f8;--ink:#16181c;--muted:#5c6473;--line:#e4e7ec;--indigo:#2c45c8;
+    --disp:'Space Grotesk',system-ui,sans-serif;--mono:'Space Mono',monospace;--body:'Inter',system-ui,sans-serif}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);
+    display:flex;justify-content:center;padding:56px 20px 30px;-webkit-font-smoothing:antialiased}
+  .stage{width:100%;max-width:760px;text-align:center}
+  .rule{width:1px;height:42px;margin:0 auto 26px;background:linear-gradient(var(--line),var(--indigo))}
+  .eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.24em;text-transform:uppercase;color:var(--indigo);margin:0 0 14px}
+  h1{font-family:var(--disp);font-weight:700;font-size:clamp(24px,3.8vw,34px);letter-spacing:-.02em;margin:0 0 14px}
+  .sub{color:var(--muted);font-size:16px;line-height:1.6;max-width:560px;margin:0 auto}
+  .sub b{color:var(--ink)}
+  .arrow{margin:26px auto 0;width:26px;height:26px;border-right:2px solid var(--indigo);border-bottom:2px solid var(--indigo);transform:rotate(45deg)}
+</style>
+</head>
+<body>
+<div class="stage">
+  <div class="rule"></div>
+  <p class="eyebrow">Under the hood</p>
+  <h1>From what it does — to how it works.</h1>
+  <p class="sub">You've seen the behavior and the live closed loop. Now the diagnosis — and the two alignment stages that produce it.</p>
+  <div class="arrow"></div>
+</div>
+<script>(function(){var lp=0;function H(){var d=document;return Math.max(d.documentElement.scrollHeight,(d.body?d.body.scrollHeight:0),(d.body?d.body.offsetHeight:0));}function P(){var h=H()+2;if(Math.abs(h-lp)>3){lp=h;try{parent.postMessage({__salsaH:h},'*');}catch(e){}}}window.addEventListener('load',function(){P();setTimeout(P,300);setTimeout(P,1200);});try{new ResizeObserver(P).observe(document.documentElement);}catch(e){}setInterval(P,1500);P();})();</script>
+</body>
+</html>

@@ -1,0 +1,202 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1"><title>SALSA — Act on What You See</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Space+Mono:wght@400;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f5f6f8;--ink:#16181c;--muted:#8B94A8;--indigo:#6E8BFF;--green:#3BE08F;
+--disp:'Space Grotesk',system-ui,sans-serif;--mono:'Space Mono',monospace;--body:'Inter',system-ui,sans-serif;}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);
+color:var(--ink);font-family:var(--body);min-height:auto;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:48px 20px}
+.hero{width:100%;max-width:1080px;text-align:center}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.24em;text-transform:uppercase;color:var(--indigo);margin:0 0 16px}
+h1{font-family:var(--disp);font-weight:600;font-size:clamp(34px,6vw,60px);line-height:1.05;margin:0 0 14px;letter-spacing:-.01em}
+.sub{color:var(--muted);font-size:clamp(15px,2vw,18px);max-width:680px;margin:0 auto;line-height:1.55}
+.svgwrap{position:relative;margin-top:14px}
+#hero{width:100%;height:auto;display:block}
+.st{opacity:.28;transition:opacity .5s ease}
+#dot{filter:drop-shadow(0 0 6px rgba(255,255,255,.9))}
+.pop{position:absolute;top:2%;width:196px;transform:translateX(-50%) translateY(6px);opacity:0;pointer-events:none;
+  transition:opacity .35s ease, transform .35s ease;}
+.pop.show{opacity:1;transform:translateX(-50%) translateY(0)}
+.popinner{background:#ffffff;border:1px solid #e4e7ec;border-radius:12px;padding:10px;box-shadow:0 12px 30px rgba(0,0,0,.45)}
+.popinner svg{width:100%;height:auto;display:block}
+.caret{width:12px;height:12px;background:#ffffff;border-right:1px solid #e4e7ec;border-bottom:1px solid #e4e7ec;
+  transform:rotate(45deg);margin:-7px auto 0}
+.replay{margin-top:16px;background:transparent;border:1px solid #e4e7ec;color:var(--muted);font-family:var(--disp);
+font-weight:600;font-size:13px;padding:9px 16px;border-radius:10px;cursor:pointer}
+.replay:hover{border-color:var(--indigo);color:var(--ink)}
+@media (prefers-reduced-motion: reduce){.st{opacity:1}}
+</style></head><body>
+<div class="hero">
+  <p class="eyebrow">Safe Social Navigation</p>
+  <h1>Act on What You See</h1>
+  <p class="sub">A VLA navigator already tells social entities from obstacles and sees danger coming — it just doesn't act on either. Follow the dot from the problem, through SALSA's two alignment stages, to the result.</p>
+  <div class="svgwrap">
+    <svg id="hero" viewBox="0 0 1120 360" xmlns="http://www.w3.org/2000/svg">
+  <line x1="80" y1="200" x2="995" y2="200" stroke="#e4e7ec" stroke-width="2"/>
+  <line id="progress" x1="80" y1="200" x2="80" y2="200" stroke="#6E8BFF" stroke-width="3"/>
+  <g class="st" id="st0" opacity="0.28">
+      <circle cx="150" cy="200" r="8" fill="#f5f6f8" stroke="#6E8BFF" stroke-width="3"/>
+      <text x="150" y="180" text-anchor="middle" font-family="'Space Mono',monospace" font-size="11" font-weight="700" letter-spacing="2" fill="#6E8BFF">01</text>
+      <text x="150" y="248" text-anchor="middle" font-family="'Space Grotesk',sans-serif" font-size="15" font-weight="700" fill="#16181c">The problem</text>
+      <text x="150" y="270" text-anchor="middle" font-family="Inter,sans-serif" font-size="11.5" fill="#8B94A8">VLA navigators do avoid — by size,</text>
+      <text x="150" y="286" text-anchor="middle" font-family="Inter,sans-serif" font-size="11.5" fill="#8B94A8">not meaning, and far too late</text>
+      
+    </g><g class="st" id="st1" opacity="0.28">
+      <circle cx="355" cy="200" r="8" fill="#f5f6f8" stroke="#6E8BFF" stroke-width="3"/>
+      <text x="355" y="180" text-anchor="middle" font-family="'Space Mono',monospace" font-size="11" font-weight="700" letter-spacing="2" fill="#6E8BFF">02</text>
+      <text x="355" y="248" text-anchor="middle" font-family="'Space Grotesk',sans-serif" font-size="15" font-weight="700" fill="#16181c">The diagnosis</text>
+      <text x="355" y="270" text-anchor="middle" font-family="Inter,sans-serif" font-size="11.5" fill="#8B94A8">they already perceive them —</text>
+      <text x="355" y="286" text-anchor="middle" font-family="Inter,sans-serif" font-size="11.5" fill="#8B94A8">it never reaches the action</text>
+      
+    </g><g class="st" id="st2" opacity="0.28">
+      <circle cx="565" cy="200" r="8" fill="#f5f6f8" stroke="#6E8BFF" stroke-width="3"/>
+      <text x="565" y="180" text-anchor="middle" font-family="'Space Mono',monospace" font-size="11" font-weight="700" letter-spacing="2" fill="#6E8BFF">03</text>
+      <text x="565" y="248" text-anchor="middle" font-family="'Space Grotesk',sans-serif" font-size="15" font-weight="700" fill="#16181c">Social alignment</text>
+      <text x="565" y="270" text-anchor="middle" font-family="Inter,sans-serif" font-size="11.5" fill="#8B94A8">counterfactuals teach</text>
+      <text x="565" y="286" text-anchor="middle" font-family="Inter,sans-serif" font-size="11.5" fill="#8B94A8">a person ≠ an object</text>
+      
+    </g><g class="st" id="st3" opacity="0.28">
+      <circle cx="775" cy="200" r="8" fill="#f5f6f8" stroke="#6E8BFF" stroke-width="3"/>
+      <text x="775" y="180" text-anchor="middle" font-family="'Space Mono',monospace" font-size="11" font-weight="700" letter-spacing="2" fill="#6E8BFF">04</text>
+      <text x="775" y="248" text-anchor="middle" font-family="'Space Grotesk',sans-serif" font-size="15" font-weight="700" fill="#16181c">Temporal safety</text>
+      <text x="775" y="270" text-anchor="middle" font-family="Inter,sans-serif" font-size="11.5" fill="#8B94A8">hindsight builds a three-tier</text>
+      <text x="775" y="286" text-anchor="middle" font-family="Inter,sans-serif" font-size="11.5" fill="#8B94A8">normal → slow → stop</text>
+      
+    </g><g class="st" id="st4" opacity="0.28">
+      <circle id="resnode" cx="995" cy="200" r="8" fill="#f5f6f8" stroke="#3BE08F" stroke-width="3"/>
+      <text x="995" y="180" text-anchor="middle" font-family="'Space Mono',monospace" font-size="11" font-weight="700" letter-spacing="2" fill="#3BE08F">RESULT</text>
+      <text x="995" y="256" text-anchor="middle" font-family="'Space Grotesk',sans-serif" font-size="30" font-weight="700" fill="#3BE08F">-86%</text>
+      <text x="995" y="280" text-anchor="middle" font-family="Inter,sans-serif" font-size="12" fill="#16181c">near-collisions</text>
+      <text x="995" y="298" text-anchor="middle" font-family="Inter,sans-serif" font-size="10" fill="#8B94A8">clearance +75.9% · social 53→93%</text>
+    </g>
+  <circle id="glow" r="16" fill="#6E8BFF" opacity="0"/>
+  <circle id="dot" r="7" fill="#fff" opacity="0"/>
+</svg>
+    <div class="pop" id="pop0" style="left:13.39%"><div class="popinner"><svg viewBox="0 0 180 96" xmlns="http://www.w3.org/2000/svg">
+      <line x1="20" y1="78" x2="160" y2="78" stroke="#e4e7ec" stroke-width="2"/>
+      <circle cx="138" cy="70" r="15" fill="none" stroke="#FF6B5E" stroke-width="1.2" stroke-dasharray="3 3" opacity="0.5"/>
+      <circle cx="138" cy="70" r="7" fill="#3BE08F"/>
+      <path d="M30 70 H120" stroke="#FF6B5E" stroke-width="1.5" stroke-dasharray="6 5" stroke-linecap="round" opacity="0.4"/>
+      <g>
+        <rect x="-6" y="-6" width="12" height="12" rx="3" fill="#eceff4" stroke="#6E8BFF" stroke-width="2"/>
+        <circle r="2.5" fill="#6E8BFF"/>
+        <animateMotion path="M14 70 L112 70 L128 56 L160 56" keyPoints="0;0.64;0.79;1" keyTimes="0;0.7;0.85;1" calcMode="linear" dur="2.6s" repeatCount="indefinite"/>
+      </g>
+      <circle cx="138" cy="70" r="15" fill="none" stroke="#FF6B5E" stroke-width="2">
+        <animate attributeName="opacity" values="0;0;0.9;0;0" keyTimes="0;0.68;0.8;0.92;1" dur="2.6s" repeatCount="indefinite"/>
+      </circle>
+      <text x="16" y="15" font-family="Inter,sans-serif" font-size="9.5" fill="#FF6B5E">avoids — but late, and by size</text>
+      <text x="16" y="27" font-family="Inter,sans-serif" font-size="9.5" fill="#8B94A8">not meaning · a person = a cone</text>
+    </svg></div><div class="caret"></div></div><div class="pop" id="pop1" style="left:31.70%"><div class="popinner"><svg viewBox="0 0 180 96" xmlns="http://www.w3.org/2000/svg">
+      <rect x="11" y="40" width="6" height="22" rx="2" fill="#3E9FD6"/><rect x="20" y="32" width="6" height="30" rx="2" fill="#3E9FD6"/><rect x="29" y="24" width="6" height="38" rx="2" fill="#6E8BFF"/><rect x="38" y="34" width="6" height="28" rx="2" fill="#6E97B5"/>
+      <text x="32" y="73" text-anchor="middle" font-family="Inter,sans-serif" font-size="7" fill="#8B94A8">probe by layer · peak ~L9</text>
+      <line x1="50" y1="34" x2="120" y2="34" stroke="#3BE08F" stroke-width="3"/>
+      <line x1="50" y1="54" x2="120" y2="54" stroke="#FFC24B" stroke-width="3"/>
+      <text x="50" y="30" font-family="Inter,sans-serif" font-size="8" fill="#3BE08F">person ≠ object</text>
+      <text x="50" y="66" font-family="Inter,sans-serif" font-size="8" fill="#FFC24B">danger ahead</text>
+      <rect x="124" y="32" width="30" height="34" rx="8" fill="#eceff4" stroke="#8B94A8" stroke-width="2"/>
+      <text x="139" y="52" text-anchor="middle" font-family="Inter,sans-serif" font-size="6.5" fill="#8B94A8">action</text>
+      <g transform="translate(122,44)"><circle r="8" fill="#eceff4" stroke="#FF6B5E" stroke-width="2"/><path d="M-3.5 -3.5 L3.5 3.5 M3.5 -3.5 L-3.5 3.5" stroke="#FF6B5E" stroke-width="2" stroke-linecap="round"/></g>
+      <circle r="3.5" fill="#3BE08F"><animateMotion path="M50 34 H110" dur="1.6s" repeatCount="indefinite"/><animate attributeName="opacity" values="0;1;1;0" dur="1.6s" repeatCount="indefinite"/></circle>
+      <circle r="3.5" fill="#FFC24B"><animateMotion path="M50 54 H110" dur="1.6s" repeatCount="indefinite"/><animate attributeName="opacity" values="0;1;1;0" dur="1.6s" repeatCount="indefinite"/></circle>
+      <text x="90" y="90" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#8B94A8">decoded inside · never acted on</text>
+    </svg></div><div class="caret"></div></div><div class="pop" id="pop2" style="left:50.45%"><div class="popinner"><svg viewBox="0 0 180 96" xmlns="http://www.w3.org/2000/svg">
+      <line x1="20" y1="80" x2="160" y2="80" stroke="#e4e7ec" stroke-width="2"/>
+      <circle cx="92" cy="72" r="8" fill="#3BE08F">
+        <animate attributeName="opacity" values="1;1;0;0;1" keyTimes="0;0.45;0.5;0.95;1" dur="3.2s" repeatCount="indefinite"/></circle>
+      <g>
+        <path d="M88 76 L92 60 L96 76 Z" fill="#FFC24B"/><rect x="85" y="76" width="14" height="3" rx="1" fill="#FFC24B"/>
+        <animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.45;0.5;0.95;1" dur="3.2s" repeatCount="indefinite"/></g>
+      <path fill="none" stroke="#2C45C8" stroke-width="3" stroke-linecap="round" d="M28 80 C 60 38,124 38,152 80">
+        <animate attributeName="d" dur="3.2s" repeatCount="indefinite"
+          values="M28 80 C 60 38,124 38,152 80; M28 80 C 60 38,124 38,152 80; M28 80 C 70 66,116 66,152 80; M28 80 C 70 66,116 66,152 80; M28 80 C 60 38,124 38,152 80"
+          keyTimes="0;0.45;0.5;0.95;1"/></path>
+      <text x="90" y="16" text-anchor="middle" font-family="Inter,sans-serif" font-size="9.5" fill="#8B94A8">
+        <tspan fill="#3BE08F">wide</tspan> for a person, <tspan fill="#FFC24B">tight</tspan> for a cone</text>
+      <text x="90" y="93" text-anchor="middle" font-family="Inter,sans-serif" font-size="8.5" fill="#8B94A8">CF-Acc 53% → 93%</text>
+    </svg></div><div class="caret"></div></div><div class="pop" id="pop3" style="left:69.20%"><div class="popinner"><svg viewBox="0 0 180 96" xmlns="http://www.w3.org/2000/svg">
+      <line x1="20" y1="78" x2="160" y2="78" stroke="#e4e7ec" stroke-width="2"/>
+      <rect x="112" y="62" width="38" height="16" fill="#FFC24B" opacity="0.13"/>
+      <rect x="138" y="62" width="14" height="16" fill="#FF6B5E" opacity="0.18"/>
+      <rect x="152" y="58" width="6" height="20" rx="2" fill="#FF6B5E"/>
+      <text x="116" y="58" font-family="Inter,sans-serif" font-size="7" fill="#FFC24B">slow</text>
+      <text x="139" y="58" font-family="Inter,sans-serif" font-size="7" fill="#FF6B5E">stop</text>
+      <g>
+        <rect x="-6" y="-6" width="12" height="12" rx="3" fill="#eceff4" stroke="#6E8BFF" stroke-width="2"/>
+        <circle r="2.5" fill="#6E8BFF"/>
+        <animateMotion path="M22 70 L138 70" keyPoints="0;0.55;0.85;1;1" keyTimes="0;0.35;0.7;0.85;1" calcMode="linear" dur="2.8s" repeatCount="indefinite"/>
+      </g>
+      <text x="14" y="15" font-family="Inter,sans-serif" font-size="9" fill="#FFC24B">hindsight → a three-tier response</text>
+      <text x="14" y="92" font-family="Inter,sans-serif" font-size="8.5" fill="#8B94A8">90% of danger frames resolved</text>
+    </svg></div><div class="caret"></div></div><div class="pop" id="pop4" style="left:88.84%"><div class="popinner"><svg viewBox="0 0 180 96" xmlns="http://www.w3.org/2000/svg">
+      <text x="90" y="40" text-anchor="middle" font-family="'Space Grotesk',sans-serif" font-size="38" font-weight="700" fill="#3BE08F">-86%
+        <animate attributeName="opacity" values="0.3;1" dur="0.8s" fill="freeze"/></text>
+      <text x="90" y="58" text-anchor="middle" font-family="Inter,sans-serif" font-size="10" fill="#8B94A8">near-collisions</text>
+      <text x="90" y="83" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#8B94A8">clearance +75.9% · social 53→93%</text>
+    </svg></div><div class="caret"></div></div>
+  </div>
+  <button class="replay" id="ctrl" onclick="toggle()">&#10073;&#10073; Pause</button>
+</div>
+<script>
+const SX=[150,355,565,775,995], LY=200, START=80;
+const dot=document.getElementById('dot'), glow=document.getElementById('glow'), prog=document.getElementById('progress');
+const resnode=document.getElementById('resnode'), btn=document.getElementById('ctrl');
+const sts=[0,1,2,3,4].map(i=>document.getElementById('st'+i));
+const pops=[0,1,2,3,4].map(i=>document.getElementById('pop'+i));
+let inLoop=false, paused=false;
+
+function setX(x){dot.setAttribute('cx',x);dot.setAttribute('cy',LY);glow.setAttribute('cx',x);glow.setAttribute('cy',LY);prog.setAttribute('x2',x);}
+function seg(x0,x1,dur){return new Promise(r=>{const t0=performance.now();(function f(t){let k=Math.min((t-t0)/dur,1);const e=1-Math.pow(1-k,3);setX(x0+(x1-x0)*e);if(k<1)requestAnimationFrame(f);else r();})(performance.now());});}
+const wait=ms=>new Promise(r=>setTimeout(r,ms));
+
+function reset(){
+  sts.forEach(s=>s.style.opacity=.28);
+  pops.forEach(p=>p.classList.remove('show'));
+  resnode.setAttribute('fill','#f5f6f8');
+  prog.setAttribute('stroke','#6E8BFF');
+  dot.setAttribute('opacity','1'); glow.setAttribute('opacity','.35');
+  setX(START);
+}
+
+async function onePass(){
+  reset();
+  let prev=START;
+  for(let i=0;i<SX.length;i++){
+    await seg(prev, SX[i], i===0?720:620); if(paused) return false;
+    sts[i].style.opacity=1; pops[i].classList.add('show');
+    const last=(i===SX.length-1);
+    if(last){ resnode.setAttribute('fill','#3BE08F'); prog.setAttribute('stroke','#3BE08F'); }
+    await wait(last?2500:1950); if(paused) return false;
+    if(last){ dot.setAttribute('opacity','0'); glow.setAttribute('opacity','0'); }
+    else pops[i].classList.remove('show');
+    prev=SX[i];
+  }
+  await wait(900); if(paused) return false;
+  pops[4].classList.remove('show');
+  await wait(700);
+  return true;
+}
+
+async function loopPlay(){
+  if(inLoop) return; inLoop=true;
+  while(!paused){ const done=await onePass(); if(!done) break; }
+  inLoop=false;
+}
+
+function setBtn(){ btn.innerHTML = paused ? '&#9654; Play' : '&#10073;&#10073; Pause'; }
+function toggle(){ paused=!paused; setBtn(); if(!paused) loopPlay(); }
+
+const rm=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+if(rm){
+  sts.forEach(s=>s.style.opacity=1);
+  resnode.setAttribute('fill','#3BE08F'); prog.setAttribute('stroke','#3BE08F'); prog.setAttribute('x2',995);
+  dot.setAttribute('opacity','0'); glow.setAttribute('opacity','0');
+  btn.style.display='none';
+} else {
+  setBtn();
+  const io=new IntersectionObserver(es=>es.forEach(e=>{ if(e.isIntersecting){ loopPlay(); io.disconnect(); }}),{threshold:.5});
+  io.observe(document.getElementById('hero'));
+}
+</script><script>(function(){var last=0;function H(){var d=document;return Math.max(d.documentElement.scrollHeight,(d.body?d.body.scrollHeight:0),(d.body?d.body.offsetHeight:0));}function P(){var h=H()+2;if(h>last){last=h;try{parent.postMessage({__salsaH:h},'*');}catch(e){}}}window.addEventListener('load',function(){P();setTimeout(P,300);setTimeout(P,1200);setTimeout(P,2500);});try{new ResizeObserver(P).observe(document.documentElement);}catch(e){}var n=0,iv=setInterval(function(){P();if(++n>12)clearInterval(iv);},1000);P();})();</script></body></html>

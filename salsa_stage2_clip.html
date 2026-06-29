@@ -1,0 +1,30 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1"><title>SALSA — Stage 2 · on a real robot</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600;700&family=Space+Mono:wght@400;700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f5f6f8;--ink:#16181c;--muted:#5c6473;--line:#e4e7ec;--indigo:#2c45c8;
+--disp:'Space Grotesk',system-ui,sans-serif;--mono:'Space Mono',monospace;--body:'Inter',system-ui,sans-serif}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);line-height:1.6;display:flex;justify-content:center;padding:30px 20px 34px;-webkit-font-smoothing:antialiased}
+.stage{width:100%;max-width:1040px}
+.eyebrow{font-family:var(--mono);font-size:11.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--indigo);margin:0 0 8px}
+h2{font-family:var(--disp);font-weight:700;font-size:clamp(18px,2.4vw,22px);letter-spacing:-.01em;margin:0 0 4px}
+.sub{color:var(--muted);font-size:14px;margin:0 0 16px;max-width:680px}
+.screen{position:relative;width:100%;aspect-ratio:16/9;background:#0F141B;border-radius:13px;overflow:hidden}
+.screen video{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;display:block;background:#0F141B}
+.ph{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#7c869a;font-family:var(--mono);font-size:11.5px;text-align:center;padding:18px;background:repeating-linear-gradient(45deg,#11151c 0 14px,#0e1218 14px 28px)}
+</style></head><body><div class="stage">
+<p class="eyebrow">Stage 2 · on a real robot</p>
+<h2>One continuous run, two surprises.</h2>
+<p class="sub">Two obstacles appear mid-path — an object, then a person. SALSA re-plans around both, early.</p>
+<div class="screen">
+<video id="vid" controls playsinline preload="metadata" style="display:none"></video>
+<div class="ph" id="ph">drop clip &#8594; clips/stage2_sequential.mp4</div>
+</div></div>
+<script>
+/* EDIT: set CLIP.src to your finished clip (autoplays muted + loops). */
+const CLIP={src:'clips/two-obstacles.mp4',poster:''};   // e.g. 'clips/stage2_sequential.mp4'
+var v=document.getElementById('vid'),p=document.getElementById('ph');
+if(CLIP.src){p.style.display='none';v.style.display='block';v.src=CLIP.src;if(CLIP.poster)v.poster=CLIP.poster;}
+</script>
+<script>(function(){var lp=0;function H(){var d=document;return Math.max(d.documentElement.scrollHeight,(d.body?d.body.scrollHeight:0),(d.body?d.body.offsetHeight:0));}function P(){var h=H()+2;if(Math.abs(h-lp)>3){lp=h;try{parent.postMessage({__salsaH:h},'*');}catch(e){}}}window.addEventListener('load',function(){P();setTimeout(P,300);setTimeout(P,1200);});try{new ResizeObserver(P).observe(document.documentElement);}catch(e){}setInterval(P,1500);P();})();</script>
+</body></html>

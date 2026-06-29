@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SALSA — Resolving danger without breaking safe</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#f5f6f8;--panel:#ffffff;--line:#e4e7ec;--ink:#16181c;--muted:#8B94A8;--faint:#5B6478;
+    --indigo:#6E8BFF;--green:#3BE08F;--coral:#FF6B5E;--amber:#FFC24B;
+    --disp:'Bricolage Grotesque',system-ui,sans-serif;--mono:'JetBrains Mono',ui-monospace,monospace;--body:'Inter',system-ui,sans-serif;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);
+    color:var(--ink);font-family:var(--body);min-height:auto;display:flex;align-items:center;justify-content:center;
+    padding:40px 20px;-webkit-font-smoothing:antialiased}
+  .stage{width:100%;max-width:880px}
+  .eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--indigo);margin:0 0 12px}
+  h1{font-family:var(--disp);font-weight:700;font-size:clamp(23px,3.7vw,34px);line-height:1.12;letter-spacing:-.015em;margin:0 0 10px}
+  .sub{color:var(--muted);max-width:600px;margin:0 0 24px;font-size:15px;line-height:1.6}
+
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:26px}
+
+  /* stepper */
+  .stepper{display:flex;border:1px solid var(--line);border-radius:12px;overflow:hidden;margin-bottom:24px}
+  .stepper button{flex:1;background:transparent;color:var(--muted);border:none;cursor:pointer;
+    font-family:var(--disp);font-weight:600;font-size:14.5px;padding:13px 8px;transition:all .18s;border-right:1px solid var(--line);position:relative}
+  .stepper button:last-child{border-right:none}
+  .stepper button .n{font-family:var(--mono);font-size:11px;opacity:.6;margin-right:6px}
+  .stepper button.on{background:var(--indigo);color:#f5f6f8}
+  .stepper button.on .n{opacity:.8}
+
+  /* headline metrics */
+  .metrics{display:grid;grid-template-columns:1.3fr 1fr 1fr;gap:14px;margin-bottom:24px}
+  @media(max-width:600px){.metrics{grid-template-columns:1fr;}}
+  .m{border:1px solid var(--line);border-radius:12px;padding:16px 18px;background:#eceff4}
+  .m .k{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+  .m .v{font-family:var(--disp);font-weight:700;font-size:30px;line-height:1;margin-top:8px}
+  .m.nc .v{color:var(--coral)} .m.dr .v{color:var(--green)} .m.sp .v{color:var(--indigo)}
+  .m .d{font-family:var(--mono);font-size:11px;color:var(--faint);margin-top:6px}
+
+  /* frame board */
+  .group{margin-bottom:18px}
+  .ghead{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px}
+  .ghead .lab{font-family:var(--disp);font-weight:600;font-size:14px}
+  .ghead .cnt{font-family:var(--mono);font-size:12px;color:var(--muted)}
+  .grid{display:grid;grid-template-columns:repeat(30,1fr);gap:3px}
+  @media(max-width:600px){.grid{grid-template-columns:repeat(20,1fr)}}
+  .cell{aspect-ratio:1;border-radius:2px;background:var(--faint);transition:background-color .55s ease}
+  .cell.safe{background:var(--green)}
+  .cell.nc{background:var(--coral)}
+
+  .legend{display:flex;gap:18px;font-family:var(--mono);font-size:11.5px;color:var(--muted);margin:6px 0 20px}
+  .legend span{display:inline-flex;align-items:center;gap:7px}
+  .legend i{width:11px;height:11px;border-radius:2px;display:inline-block}
+  .caption{font-size:14px;line-height:1.65;color:var(--muted);border-left:2px solid var(--indigo);padding-left:14px;min-height:52px}
+  .caption b{color:var(--ink)}
+  .foot{font-family:var(--mono);font-size:11px;color:var(--faint);margin-top:18px;line-height:1.6}
+</style>
+</head>
+<body>
+<div class="stage">
+  <div style="display:flex;align-items:center;gap:13px;margin:0 0 16px"><span style="font-family:'Space Mono',monospace;font-weight:700;font-size:12px;color:#2c45c8;border:1.5px solid #2c45c8;border-radius:9px;padding:5px 11px;letter-spacing:.12em">STAGE 02</span><span style="height:2px;flex:1;border-radius:2px;background:linear-gradient(90deg,#2c45c8,rgba(44,69,200,0))"></span></div>
+  <p class="eyebrow">Temporal safety alignment</p>
+  <p style="font-family:'Space Grotesk',system-ui,sans-serif;font-weight:600;font-size:15px;color:#2c45c8;margin:2px 0 14px">Learned from hindsight — no extra labels.</p>
+  <h1>Resolve the dangerous frames — without breaking the safe ones.</h1>
+  <p class="sub">Hindsight relabeling traces each near-collision back to the frames that led to it, teaching the policy an early, graded response to danger — at matched speed, not by slowing down. But fixing danger naively damages frames that were already safe; EWC is what lets us get both. Step through it.</p>
+
+  <div class="card">
+    <div class="stepper">
+      <button data-s="0" onclick="go(0)"><span class="n">1</span>Base (BC)</button>
+      <button data-s="1" onclick="go(1)"><span class="n">2</span>+ Hindsight</button>
+      <button data-s="2" class="on" onclick="go(2)"><span class="n">3</span>+ EWC · Ours</button>
+    </div>
+
+    <div class="metrics">
+      <div class="m nc"><div class="k">Near-collisions</div><div class="v" id="ncv">334</div><div class="d" id="ncd">−86.4%</div></div>
+      <div class="m dr"><div class="k">Danger resolved</div><div class="v" id="drv">90%</div></div>
+      <div class="m sp"><div class="k">Safe preserved</div><div class="v" id="spv">96.4%</div></div>
+    </div>
+
+    <div class="group">
+      <div class="ghead"><span class="lab">Frames that were dangerous</span><span class="cnt" id="dc">2,460 frames</span></div>
+      <div class="grid" id="gridDanger"></div>
+    </div>
+    <div class="group">
+      <div class="ghead"><span class="lab">Frames that were safe</span><span class="cnt" id="sc">2,442 frames</span></div>
+      <div class="grid" id="gridSafe"></div>
+    </div>
+
+    <div class="legend">
+      <span><i style="background:var(--green)"></i> safe / resolved</span>
+      <span><i style="background:var(--coral)"></i> near-collision</span>
+    </div>
+
+    <div class="caption" id="cap"></div>
+    <p style="font-family:'Inter',system-ui,sans-serif;font-size:14px;line-height:1.6;color:#5c6473;border-left:3px solid #2c45c8;padding:2px 0 2px 14px;margin:18px 0 6px"><b style="color:#16181c;font-family:'Space Grotesk',system-ui,sans-serif">Implementation:</b> hindsight relabeling sorts frames into three tiers — <b>normal / slow + avoid / stop</b>; EWC anchors the already-safe frames so the new alignment doesn't erode them.</p>
+    <p class="foot">Proportions and figures from the SCAND safe-vs-danger frame analysis (2,460 danger + 2,442 safe frames).</p>
+  </div>
+</div>
+
+<script>
+const N = 90; // cells per group (each ~27 frames)
+const STEPS = [
+  { nc:2460, ncd:"baseline", resolved:0,    broken:0,    btn:0,
+    cap:"<b>Behavior cloning</b> maps each frame to an action in isolation — it never links the present to the collision it is heading toward. Dangerous frames stay dangerous: the response comes too late." },
+  { nc:1590, ncd:"−35%",  resolved:60.4, broken:25.2, btn:1,
+    cap:"<b>Hindsight relabeling</b> propagates each near-collision back onto the frames that led to it, so the policy learns to respond to danger early. It resolves most danger frames and already cuts near-collisions by 35% — but the same naive fine-tuning overwrites behavior on frames that were already safe, <b>breaking about a quarter of them</b>. That collateral damage is what holds the net back." },
+  { nc:334,  ncd:"−86.4%",  resolved:90.0, broken:3.6,  btn:2,
+    cap:"<b>EWC</b> locks the parameters that matter for safe-frame behavior. Danger keeps resolving (90%) while safe frames stop breaking (3.6%) — together, near-collisions fall <b>86.4%</b>." }
+];
+
+// build grids
+const gd = document.getElementById('gridDanger');
+const gs = document.getElementById('gridSafe');
+for(let i=0;i<N;i++){ gd.appendChild(Object.assign(document.createElement('div'),{className:'cell'}));
+                      gs.appendChild(Object.assign(document.createElement('div'),{className:'cell'})); }
+const dcells=[...gd.children], scells=[...gs.children];
+
+function paint(step){
+  const s=STEPS[step];
+  // danger group: start all NC; 'resolved' fraction become safe (fill from left)
+  const dResolved=Math.round(N*s.resolved/100);
+  dcells.forEach((c,i)=>{ c.className = 'cell ' + (i<dResolved ? 'safe' : 'nc'); });
+  // safe group: start all safe; 'broken' fraction become NC (fill from right)
+  const sBroken=Math.round(N*s.broken/100);
+  scells.forEach((c,i)=>{ c.className = 'cell ' + (i>=N-sBroken ? 'nc' : 'safe'); });
+
+  document.getElementById('drv').textContent = s.resolved.toFixed(s.resolved%1?1:0)+'%';
+  document.getElementById('spv').textContent = (100-s.broken).toFixed(s.broken%1?1:0)+'%';
+  document.getElementById('ncd').textContent = s.ncd;
+  document.getElementById('cap').innerHTML = s.cap;
+  document.querySelectorAll('.stepper button').forEach(b=>b.classList.toggle('on', +b.dataset.s===step));
+  tween(document.getElementById('ncv'), s.nc);
+}
+
+let cur=2;
+function go(step){ cur=step; paint(step); }
+
+// number tween
+function tween(el, to){
+  const from = parseInt(el.textContent.replace(/[^0-9]/g,''))||0;
+  const t0=performance.now(), dur=650;
+  function f(t){ const k=Math.min((t-t0)/dur,1); const v=Math.round(from+(to-from)*(1-Math.pow(1-k,3)));
+    el.textContent=v.toLocaleString(); if(k<1) requestAnimationFrame(f); }
+  requestAnimationFrame(f);
+}
+
+paint(2);
+</script>
+<script>(function(){var last=0;function H(){var d=document;return Math.max(d.documentElement.scrollHeight,(d.body?d.body.scrollHeight:0),(d.body?d.body.offsetHeight:0));}function P(){var h=H()+2;if(h>last){last=h;try{parent.postMessage({__salsaH:h},'*');}catch(e){}}}window.addEventListener('load',function(){P();setTimeout(P,300);setTimeout(P,1200);setTimeout(P,2500);});try{new ResizeObserver(P).observe(document.documentElement);}catch(e){}var n=0,iv=setInterval(function(){P();if(++n>12)clearInterval(iv);},1000);P();})();</script></body>
+</html>

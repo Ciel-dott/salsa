@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SALSA — Act on What You See</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Space+Mono:wght@400;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#F5F6F8; --ink:#16181C; --muted:#5C6473; --faint:#8A92A2; --line:#E4E7EC;
+    --indigo:#2C45C8; --green:#1F9D6B;
+    --disp:'Space Grotesk',system-ui,sans-serif; --mono:'Space Mono',monospace; --body:'Inter',system-ui,sans-serif;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);line-height:1.6;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:1040px;margin:0 auto;padding:0 24px}
+
+  header.top{display:flex;align-items:center;justify-content:space-between;padding:22px 0 6px}
+  .mark{font-family:var(--mono);font-weight:700;letter-spacing:.22em;font-size:13px;color:var(--indigo)}
+  .arxiv-btn{display:inline-flex;align-items:center;gap:6px;font-family:var(--disp);font-weight:600;font-size:14px;
+    color:#fff;background:var(--indigo);border:1px solid var(--indigo);border-radius:10px;padding:8px 16px;text-decoration:none;
+    transition:transform .15s,box-shadow .15s}
+  .arxiv-btn:hover{transform:translateY(-1px);box-shadow:0 8px 22px -12px rgba(44,69,200,.55)}
+
+  /* each interactive flows as a section of the page — no card chrome */
+  .block{margin:18px 0}
+  .block + .block{margin-top:40px}
+  iframe.demo{display:block;width:100%;border:0;background:transparent}
+
+  /* real-robot video slots (empty state) */
+  .vslot{margin:26px 0 6px;background:#ECEFF3;border:0;border-radius:16px;
+    aspect-ratio:16/9;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;color:var(--faint)}
+  .vslot .play{width:46px;height:46px;border-radius:50%;border:1.5px solid var(--line);display:grid;place-items:center}
+  .vslot .play svg{margin-left:3px}
+  .vslot .t{font-family:var(--disp);font-weight:600;color:var(--muted);font-size:15px}
+  .vslot .s{font-family:var(--mono);font-size:11px;letter-spacing:.08em}
+
+  footer{padding:48px 0 60px;color:var(--faint);font-family:var(--mono);font-size:12px;text-align:center}
+  footer a{color:var(--muted)}
+  :focus-visible{outline:2px solid var(--indigo);outline-offset:3px;border-radius:6px}
+</style>
+</head>
+<body>
+
+<header class="top wrap">
+  <span class="mark">SALSA</span>
+  <!-- swap the href below with your arXiv link -->
+  <a class="arxiv-btn" href="https://arxiv.org/abs/2606.10495" target="_blank" rel="noopener">arXiv &#8599;</a>
+</header>
+
+<main>
+  <!-- HERO (through-line, opening) -->
+  <section class="block" style="margin-top:6px"><div class="wrap">
+    <iframe class="demo" src="salsa_hero_throughline.html" style="height:560px" title="SALSA through-line" loading="eager"></iframe>
+  </div></section>
+
+  <!-- THE PROBLEM (2x2 base failures) -->
+  <section class="block"><div class="wrap">
+    <iframe class="demo" src="salsa_failure.html" style="height:820px" title="Base navigation VLA failures" loading="eager"></iframe>
+  </div></section>
+
+  <!-- REAL-TIME -->
+  <section class="block"><div class="wrap">
+    <iframe class="demo" src="salsa_realtime_topdownnew.html" style="height:820px" title="Real-time social reaction" loading="lazy"></iframe>
+  </div></section>
+
+  <!-- REAL-ROBOT CLIPS (scenario tabs; fill mp4 paths inside salsa_realrobot_clips.html) -->
+  <section class="block"><div class="wrap">
+    <iframe class="demo" src="salsa_realrobot_clips.html" style="height:640px" title="Real-robot clips" loading="lazy"></iframe>
+  </div></section>
+
+  <!-- ACT II DIVIDER -->
+  <section class="block"><div class="wrap">
+    <iframe class="demo" src="salsa_divider.html" style="height:300px" title="How it works" loading="lazy"></iframe>
+  </div></section>
+
+  <!-- DIAGNOSIS -->
+  <section class="block"><div class="wrap">
+    <iframe class="demo" src="salsa_forward_pass_animated.html" style="height:860px" title="Encoded but not executed" loading="lazy"></iframe>
+  </div></section>
+
+  <!-- STAGE 1 -->
+  <section class="block"><div class="wrap">
+    <iframe class="demo" src="salsa_social_clearance.html" style="height:900px" title="Social clearance" loading="lazy"></iframe>
+  </div></section>
+
+  <!-- STAGE 1 · REAL-ROBOT CLIP -->
+  <section class="block"><div class="wrap">
+    <iframe class="demo" src="salsa_stage1_clip.html" style="height:640px" title="Stage 1 real-robot clip" loading="lazy"></iframe>
+  </div></section>
+
+  <!-- STAGE 2 -->
+  <section class="block"><div class="wrap">
+    <iframe class="demo" src="salsa_safety_board.html" style="height:880px" title="Temporal safety board" loading="lazy"></iframe>
+  </div></section>
+  <!-- STAGE 2 · REAL-ROBOT CLIP -->
+  <section class="block"><div class="wrap">
+    <iframe class="demo" src="salsa_stage2_clip.html" style="height:640px" title="Stage 2 real-robot clip" loading="lazy"></iframe>
+  </div></section>
+
+  <!-- RESULTS · OVERVIEW -->
+  <section class="block"><div class="wrap">
+    <iframe class="demo" src="salsa_results.html" style="height:760px" title="Results overview" loading="lazy"></iframe>
+  </div></section>
+
+  <!-- RESULTS · PER-SCENARIO TABLE -->
+  <section class="block"><div class="wrap">
+    <iframe class="demo" src="salsa_results_table.html" style="height:560px" title="Per-scenario table" loading="lazy"></iframe>
+  </div></section>
+
+  <!-- DEPLOYMENT REEL (bottom film strip; fill paths inside salsa_reel.html) -->
+  <section class="block"><div class="wrap">
+    <iframe class="demo" src="salsa_reel.html" style="height:340px" title="Deployment reel" loading="lazy"></iframe>
+  </div></section>
+</main>
+
+<footer class="wrap">SALSA · Safe Social Navigation in VLAs &nbsp;·&nbsp; <a href="https://arxiv.org/abs/2606.10495" target="_blank" rel="noopener">arXiv link</a></footer>
+
+<script>
+// Each embedded interactive reports its own height via postMessage; size its iframe to
+// match. Works through sandboxes/cross-origin (only messaging, no cross-frame DOM access).
+window.addEventListener('message', function(e){
+  var d = e.data; if(!d || typeof d.__salsaH !== 'number') return;
+  var fs = document.querySelectorAll('iframe.demo');
+  for(var i=0;i<fs.length;i++){ if(fs[i].contentWindow === e.source){ if(d.__salsaH>80) fs[i].style.height = d.__salsaH+'px'; break; } }
+});
+</script>
+</body>
+</html>

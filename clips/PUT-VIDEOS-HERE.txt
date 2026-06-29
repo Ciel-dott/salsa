@@ -1,0 +1,18 @@
+Put your 14 mp4 files here, using EXACTLY these names (no spaces):
+
+finalnew.mp4            <- opening 2x2 failure montage
+head-on.mp4             <- real-robot gallery: Head-on
+overtaking.mp4          <- real-robot gallery: Overtaking
+sudden-appearance.mp4   <- real-robot gallery: Sudden appearance  (rename from "sudden appearance.mp4")
+static-object.mp4       <- real-robot gallery: Static obstacle     (rename from "static object.mp4")
+person-object.mp4       <- Stage 1 clip (person vs object 2x2)
+two-obstacles.mp4       <- Stage 2 clip (rename from "two obstacles.mp4")
+encounter.mp4           <- bottom montage
+human-interaction.mp4   <- bottom montage (rename from "human interaction.mp4")
+narrow.mp4              <- bottom montage
+safe-overtake.mp4       <- bottom montage (rename from "safe overtake.mp4")
+social-aware.mp4        <- bottom montage (rename from "social aware.mp4")
+red-cone.mp4            <- bottom montage (rename from "red cone.mp4")
+suitcase.mp4           <- bottom montage
+
+(You can delete this txt file once the videos are in.)
