@@ -133,7 +133,7 @@ function setScen(sname){scen=sname;document.querySelectorAll('.scenarios button'
   else if(sname==='sudden')ped={x:112,y:232};else if(sname==='static')ped={x:240,y:250};else ped={x:300,y:300};
   pedlbl.textContent=(sname==='free')?'drag me':'';}
 document.querySelectorAll('.scenarios button').forEach(b=>b.addEventListener('click',()=>setScen(b.dataset.s)));
-// drag (goal in any scenario; pedestrian in free mode)
+
 let dragTarget=null;
 function pt(e){const r=svg.getBoundingClientRect();const cx=(e.touches?e.touches[0].clientX:e.clientX),cy=(e.touches?e.touches[0].clientY:e.clientY);return{x:(cx-r.left)/r.width*480,y:(cy-r.top)/r.height*560};}
 function down(e){const p=pt(e);
@@ -149,7 +149,7 @@ function clampPed(){ped.x=Math.max(16,Math.min(464,ped.x));ped.y=Math.max(16,Mat
 function clampGoal(){GOAL.x=Math.max(80,Math.min(400,GOAL.x));GOAL.y=Math.max(16,Math.min(470,GOAL.y));}
 svg.addEventListener('mousedown',down);window.addEventListener('mousemove',mv);window.addEventListener('mouseup',up);
 svg.addEventListener('touchstart',down,{passive:false});window.addEventListener('touchmove',mv,{passive:false});window.addEventListener('touchend',up);
-// scenario-scripted pedestrian motion
+
 function scriptPed(dt){
   if(scen==='headon'){ped.x=240;ped.y+=52*dt;if(ped.y>548){ped.y=60;}}
   else if(scen==='overtaking'){ped.x=240;ped.y-=20*dt;if(ped.y<48){ped.y=420;}}
@@ -165,7 +165,7 @@ function step(now){
   let goalW=1.0;
   if(mode!=='salsa' && swerved){
     // base: keeps driving FORWARD (upward) but no longer homes on the goal's x -> drifts to one side
-    gx=baseSide*0.7; gy=-1.0;            // forward + sideways veer (misses the goal left/right)
+    gx=baseSide*0.7; gy=-1.0;           
     const n=Math.hypot(gx,gy); gx/=n; gy/=n;
   } else { gx*=goalW; gy*=goalW; }
   let ax=robot.x-ped.x,ay=robot.y-ped.y;const pd=Math.hypot(ax,ay)||1;
@@ -174,10 +174,10 @@ function step(now){
     const f=(P.infl-pd)/P.infl*P.strength;
     rx=ax/pd*f; ry=ay/pd*f;
     const nx=ax/pd, ny=ay/pd;
-    const align=Math.max(0,-(nx*gx+ny*gy));       // 1 when pedestrian straight ahead
+    const align=Math.max(0,-(nx*gx+ny*gy));      
     // choose OPEN side: steer toward road centre (x=240) -> away from nearer curb
-    const side = (ped.x>=240? -1 : 1);            // ped on right -> pass on left(toward centre) etc.
-    const px=-gy*side, py=gx*side;                // perpendicular to goal dir
+    const side = (ped.x>=240? -1 : 1);           
+    const px=-gy*side, py=gx*side;             
     // tangential side-step (scaled per scenario + how head-on)
     const tang=f*P.tang*(0.5+1.0*align);
     rx+=px*tang; ry+=py*tang;
