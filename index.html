@@ -24,12 +24,12 @@
     transition:transform .15s,box-shadow .15s}
   .arxiv-btn:hover{transform:translateY(-1px);box-shadow:0 8px 22px -12px rgba(44,69,200,.55)}
 
-  /* each interactive flows as a section of the page — no card chrome */
+
   .block{margin:18px 0}
   .block + .block{margin-top:40px}
   iframe.demo{display:block;width:100%;border:0;background:transparent}
 
-  /* real-robot video slots (empty state) */
+ 
   .vslot{margin:26px 0 6px;background:#ECEFF3;border:0;border-radius:16px;
     aspect-ratio:16/9;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;color:var(--faint)}
   .vslot .play{width:46px;height:46px;border-radius:50%;border:1.5px solid var(--line);display:grid;place-items:center}
@@ -46,17 +46,16 @@
 
 <header class="top wrap">
   <span class="mark">SALSA</span>
-  <!-- swap the href below with your arXiv link -->
   <a class="arxiv-btn" href="https://arxiv.org/abs/2606.10495" target="_blank" rel="noopener">arXiv &#8599;</a>
 </header>
 
 <main>
-  <!-- HERO (through-line, opening) -->
+
   <section class="block" style="margin-top:6px"><div class="wrap">
     <iframe class="demo" src="salsa_hero_throughline.html" style="height:560px" title="SALSA through-line" loading="eager"></iframe>
   </div></section>
 
-  <!-- THE PROBLEM (2x2 base failures) -->
+  
   <section class="block"><div class="wrap">
     <iframe class="demo" src="salsa_failure.html" style="height:820px" title="Base navigation VLA failures" loading="eager"></iframe>
   </div></section>
@@ -66,7 +65,7 @@
     <iframe class="demo" src="salsa_realtime_topdownnew.html" style="height:820px" title="Real-time social reaction" loading="lazy"></iframe>
   </div></section>
 
-  <!-- REAL-ROBOT CLIPS (scenario tabs; fill mp4 paths inside salsa_realrobot_clips.html) -->
+
   <section class="block"><div class="wrap">
     <iframe class="demo" src="salsa_realrobot_clips.html" style="height:640px" title="Real-robot clips" loading="lazy"></iframe>
   </div></section>
